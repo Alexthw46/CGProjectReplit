@@ -5,7 +5,7 @@
  * Cylinder is defined to be centered at the origin of the coordinate axis, and lying on the XZ plane.
  * Cylinder height is assumed to be 2.0. Cylinder radius is assumed to be 1.0 .
  */
-function Cylinder (resolution) {
+export function Cylinder (resolution) {
 
     let i;
     this.name = "cylinder";
