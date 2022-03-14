@@ -20,13 +20,14 @@ function createObjectBuffers(gl, obj) {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, obj.indexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, obj.triangleIndices, gl.STATIC_DRAW);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+
 }
 
 let cube;
 let cylinder;
 
 function setupWhatToDraw() {
-    cube = new Cube(10);
+    cube = new Cube();
     createObjectBuffers(gl,cube);
 
     cylinder = new Cylinder(10);
