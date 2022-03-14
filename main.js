@@ -1,16 +1,20 @@
+import * as cubes from './common/shapes/cube.js';
+import * as cylinders from './common/shapes/cylinder.js';
+import simpleShaders from "./simple_shader.js";
+
 let angle = 0.0;
-
-let canvas;
 let gl;
+let canvas;
+let id;
 
-function setupWebGL() {
-    canvas = document.getElementById("OUTPUT-CANVAS");
-    gl = canvas.getContext('webgl');
-    gl.enable(gl.DEPTH_TEST);
+window.onload = helloRotations;
+
+function helloRotations(){
+    setup();
+    id = setInterval(draw, 20);
 }
 
 function createObjectBuffers(gl, obj) {
-
     obj.vertexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, obj.vertexBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, obj.vertices, gl.STATIC_DRAW);
@@ -27,30 +31,29 @@ let cube;
 let cylinder;
 
 function setupWhatToDraw() {
-    cube = new Cube();
+    cube = new cubes.Cube();
     createObjectBuffers(gl,cube);
 
-    cylinder = new Cylinder(10);
-    createObjectBuffers(gl,cylinder );
+    cylinder = new cylinders.Cylinder(10);
+    createObjectBuffers(gl,cylinder);
 }
 
 function drawObject(gl, obj, fillColor) {
     gl.bindBuffer(gl.ARRAY_BUFFER, obj.vertexBuffer);
-    gl.enableVertexAttribArray(this.simpleShader.aPositionIndex);
-    gl.vertexAttribPointer(this.simpleShader.aPositionIndex, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(simpleShader.aPositionIndex);
+    gl.vertexAttribPointer(simpleShader.aPositionIndex, 3, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, obj.indexBuffer);
-    gl.uniform3fv(this.simpleShader.uColorLocation, fillColor);
+    gl.uniform3fv(simpleShader.uColorLocation, fillColor);
     gl.drawElements(gl.TRIANGLES, obj.triangleIndices.length, gl.UNSIGNED_SHORT, 0);
 
-
-    gl.disableVertexAttribArray(this.simpleShader.aPositionIndex);
+    gl.disableVertexAttribArray(simpleShader.aPositionIndex);
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
 }
 
 let simpleShader;
-function setupHowToDraw() {
-    simpleShader = new simpleShader(gl);
+function setupHowToDraw(gl) {
+    simpleShader = new simpleShaders(gl);
 }
 
 function draw(){
@@ -99,19 +102,16 @@ function draw(){
     gl.uniformMatrix4fv(simpleShader.uM,false,glMatrix.mat4.create());
     drawObject(gl,cube,[0.5,0.6,0.7]);
     drawObject(gl,cylinder,[0.7,0.6,0.5]);
+
+
+
     // ---------------------------------------------------------------------------
 }
 
 function setup(){
-    setupWebGL();
-    setupWhatToDraw();
-    setupHowToDraw();
+    canvas = document.getElementById("OUTPUT-CANVAS");
+    gl = canvas.getContext('webgl');
+    gl.enable(gl.DEPTH_TEST);
+    setupWhatToDraw(gl);
+    setupHowToDraw(gl);
 }
-
-let id;
-
-function helloRotations(){
-    setup();
-    id = setInterval(draw, 20);
-}
-window.onload = helloRotations;

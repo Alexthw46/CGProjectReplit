@@ -4,7 +4,7 @@
  * Cube is defined to be centered at the origin of the coordinate reference system.
  * Cube size is assumed to be 2.0 x 2.0 x 2.0 .
  */
-function Cube () {
+export function Cube () {
 
     this.name = "cube";
 

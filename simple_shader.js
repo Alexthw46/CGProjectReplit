@@ -1,4 +1,4 @@
-simpleShader = function (gl) {
+let simpleShaders = function (gl) {
     let vertexShaderSource = `
 		uniform   mat4 uProjectionMatrix;	
     uniform   mat4 uViewMatrix;
@@ -59,3 +59,4 @@ simpleShader = function (gl) {
     return shaderProgram;
 };
 
+export {simpleShaders as default};
