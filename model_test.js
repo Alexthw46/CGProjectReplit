@@ -107,10 +107,7 @@ function draw(){
         drawObject(gl,cube,color_translate);
     }
 
-    // TODO Here setup the transformation matrices and the render call to draw your car
-
     //car hull
-
 
     gl.uniformMatrix4fv(simpleShader.uM,false, carMatrix());
     drawObject(gl,cube,[0.5,0.6,0.7]);
